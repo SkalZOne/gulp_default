@@ -35,6 +35,6 @@ gulp.task('default', function(){
     notify: false
     });
   watch('site/src/scss/**/*.scss', gulp.series('sass-compile'));
-  watch('site/src/**/*.pug', gulp.series('pug-compile'));
+  watch('site/src/*.pug', gulp.series('pug-compile'));
   watch('site/dest/*.html').on('change', browserSync.reload)
 })
