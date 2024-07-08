@@ -21,7 +21,9 @@ gulp.task('sass-compile', function(){
 // Компиляция Pug
 gulp.task('pug-compile', function(){
     return gulp.src('site/src/**/*.pug')
-    .pipe(pug())
+    .pipe(pug({
+        pretty: true
+    }))
     .pipe(gulp.dest('site/dest'))
     .pipe(browserSync.stream())
 })
