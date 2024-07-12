@@ -6,13 +6,14 @@ import sourcemaps from 'gulp-sourcemaps';
 import watch from 'gulp-watch';
 import browserSync from 'browser-sync';
 import pug from 'gulp-pug';
+import stylelint from 'gulp-stylelint-esm';
 
 
 // Компиляция SASS
 gulp.task('sass-compile', function(){
-    return gulp.src('site/src/scss/**/*.scss')
+    return gulp.src('site/src/scss/prod/*.scss')
     .pipe(sourcemaps.init())
-    .pipe(sass().on('error', sass.logError)) 
+    .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError)) 
     .pipe(sourcemaps.write(''))
     .pipe(gulp.dest('site/dest/css/'))
     .pipe(browserSync.stream())
@@ -20,7 +21,7 @@ gulp.task('sass-compile', function(){
 
 // Компиляция Pug
 gulp.task('pug-compile', function(){
-    return gulp.src('site/src/**/*.pug')
+    return gulp.src('site/src/pug/prod/*.pug')
     .pipe(pug({
         pretty: true
     }))
@@ -36,7 +37,21 @@ gulp.task('default', function(){
         },
     notify: false
     });
-  watch('site/src/scss/**/*.scss', gulp.series('sass-compile'));
-  watch('site/src/**/*.pug', gulp.series('pug-compile'));
+  watch('site/src/scss/**/*.scss', gulp.series('sass-compile', 'lint-css'));
+  watch('site/src/pug/**/*.pug', gulp.series('pug-compile'));
   watch('site/dest/*.html').on('change', browserSync.reload)
+})
+
+// Линтеры
+gulp.task('lint-css', function(){
+    return gulp.src('site/src/scss/**/*.scss')
+    .pipe(stylelint({
+        failAfterError: false,
+        reporters: [
+            {
+                formatter: 'string', 
+                console: true,
+            }
+        ]
+    }))
 })

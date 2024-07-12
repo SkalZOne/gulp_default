@@ -11,13 +11,20 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@zoxon/emitty": "^1.4.2",
     "browser-sync": "^3.0.2",
     "gulp": "^5.0.0",
+    "gulp-if": "^3.0.0",
+    "gulp-plumber": "^1.2.1",
     "gulp-pug": "^5.0.0",
     "gulp-sass": "^5.1.0",
     "gulp-sourcemaps": "^3.0.0",
+    "gulp-stylelint-esm": "^2.1.0",
     "gulp-watch": "^5.0.1",
     "i": "^0.3.7",
-    "sass": "^1.77.6"
+    "sass": "^1.77.6",
+    "stylelint": "^16.6.1",
+    "stylelint-config-recess-order": "^5.0.1",
+    "stylelint-config-standard": "^36.0.1"
   }
 }
