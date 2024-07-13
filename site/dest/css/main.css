@@ -1,2 +1,18 @@
-
+@font-face {
+  font-family: Atop;
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/Atop-R99O3.woff2") format("woff2"), url("../src/fonts/Atop-R99O3.woff") format("woff");
+  font-display: swap;
+}
+@font-face {
+  font-family: Rurintania;
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/Rurintania.woff2") format("woff2"), url("../src/fonts/Rurintania.woff") format("woff");
+  font-display: swap;
+}
+body {
+  font-family: Rurintania;
+}
 /*# sourceMappingURL=main.css.map */

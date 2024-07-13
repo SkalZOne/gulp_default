@@ -3,6 +3,8 @@ export default {
     rules: {
       "at-rule-no-unknown": [true, {
         "ignoreAtRules": ["mixin", "include"]
-      }]
+      }],
+      "import-notation": null,
+      "font-family-no-missing-generic-family-keyword": null
     }
   }
