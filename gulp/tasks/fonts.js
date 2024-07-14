@@ -4,7 +4,7 @@ import ttf2woff2 from 'gulp-ttf2woff2';
 import plumber from 'gulp-plumber'
 import notify from 'gulp-notify'
 import fs from 'fs';
-import { deleteAsync, deleteSync } from 'del'
+import { deleteAsync } from 'del'
 
 export const otfToTtf = () => {
     // Поиск файлов .otf
@@ -21,10 +21,14 @@ export const otfToTtf = () => {
         }))
         // Выгрузка в папку
         .pipe(gulp.dest('site/dest/fonts/ttf'))
+
+        // Выгрузка всех .ttf в dest
+        .pipe(gulp.src('site/src/fonts/*.ttf', {encoding:false}))
+        .pipe(gulp.dest('site/dest/fonts/ttf'))
 }
 export const ttfToWoff = async () => {
     // Поиск файлов .ttf
-    return await gulp.src(['site/src/fonts/*.ttf', 'site/dest/fonts/ttf/*.ttf'], {encoding:false})
+    return await gulp.src('site/dest/fonts/ttf/*.ttf', {encoding:false})
         .pipe(plumber(
             notify.onError({
                 title: 'FONTS',
@@ -37,12 +41,6 @@ export const ttfToWoff = async () => {
         }))
         // Выгрузка в папку
         .pipe(gulp.dest('site/dest/fonts'))
-        // Поиск файлов .ttf
-        .pipe(gulp.src(['site/src/fonts/*.ttf', 'site/dest/fonts/ttf/*.ttf'], {encoding:false}))
-        // Конверт в .woff2
-        .pipe(ttf2woff2())
-        // Выгрузка в папку
-        .pipe(gulp.dest('site/dest/fonts'))
         // Ищем файлы шрифтов .woff
         .pipe(gulp.src('site/src/fonts/*.woff', {encoding:false}))
 		// Выгружаем в папку с результатом
@@ -51,11 +49,17 @@ export const ttfToWoff = async () => {
         .pipe(gulp.src('site/src/fonts/*.woff2', {encoding:false}))
         // Выгружаем в папку с результатом
         .pipe(gulp.dest('site/dest/fonts'));
-    }
+}
+
+export const ttfToWoff2 = () => {
+    return gulp.src('site/dest/fonts/ttf/*.ttf', {encoding:false})
+    .pipe(ttf2woff2())
+    .pipe(gulp.dest('site/dest/fonts'))
+}
+
 
 export const fontsStyle = async () => {
     let fontsFile = 'site/src/scss/imports/fonts.scss';
-
     fs.readdir('site/src/fonts', async function (err, fontsFiles) {
         if (fontsFiles) {
             await deleteAsync(['site/src/scss/imports/fonts.scss', 'site/dest/fonts/ttf'])
@@ -107,4 +111,4 @@ export const fontsStyle = async () => {
 
 
 
-export const fontsWatch = () => gulp.watch('site/src/fonts/**', gulp.series(otfToTtf, ttfToWoff, fontsStyle))
+export const fontsWatch = () => gulp.watch('site/src/fonts/**', gulp.series(otfToTtf, ttfToWoff, ttfToWoff2, fontsStyle))

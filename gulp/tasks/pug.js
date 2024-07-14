@@ -29,7 +29,7 @@ export const pugCompile = () => {
         ),
       )
     .pipe(pug({ pretty: true }))
-    .pipe(gulp.dest('site/dest'))
+    .pipe(gulp.dest('site/dest/index'))
     .pipe(browserSync.stream())
 }
 
