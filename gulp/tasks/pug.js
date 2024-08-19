@@ -16,7 +16,7 @@ global.emittyChangedFile = {
 };
 
 // Компиляция Pug
-export const pugCompile = () => {
+const pugCompile = () => {
     return gulp.src('site/src/pug/prod/*.pug')
     .pipe(plumber())
     .pipe(

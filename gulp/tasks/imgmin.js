@@ -3,14 +3,14 @@ import browserSync from 'browser-sync';
 import webp from 'gulp-webp'
 import { deleteAsync } from 'del'
 
-export const imageMin = () => {
+const imageMin = () => {
     return gulp.src('site/src/img/*', {encoding: false})
         .pipe(webp())
         .pipe(gulp.dest('site/dest/img'))
         .pipe(browserSync.stream())
 }
 
-export const reset = () => {
+const reset = () => {
     return deleteAsync('site/dest/img/*')
 }
 
